@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;AmazonKinesisRecordProducerSample.java&apos; to &apos;Twiter-AWS-SQS/src/main/java/kinesisPorducer&apos;&#x0D;&#x0A;- Original project: &apos;KinesisSample&apos;&#x0D;&#x0A;- Destination element: &apos;Twiter-AWS-SQS/src/main/java/kinesisPorducer&apos;&#x0D;&#x0A;- Original element: &apos;com.amazonaws.samples.AmazonKinesisRecordProducerSample.java&apos;" description="Copy compilation unit" destination="=Twiter-AWS-SQS/src\/main\/java&lt;kinesisPorducer" element1="/src\/main\/java&lt;com.amazonaws.samples{AmazonKinesisRecordProducerSample.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1507879959332" units="1" version="1.0"/>
+</session>

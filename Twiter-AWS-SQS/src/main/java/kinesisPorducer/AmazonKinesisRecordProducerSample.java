@@ -1,0 +1,86 @@
+package kinesisPorducer;
+/*
+ * Copyright 2012-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *  http://aws.amazon.com/apache2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+import java.nio.ByteBuffer;
+
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.kinesis.AmazonKinesisClient;
+import com.amazonaws.services.kinesis.model.DescribeStreamRequest;
+import com.amazonaws.services.kinesis.model.PutRecordRequest;
+import com.amazonaws.services.kinesis.model.PutRecordResult;
+import com.amazonaws.services.kinesis.model.StreamDescription;
+
+public class AmazonKinesisRecordProducerSample
+{
+ 
+    private AmazonKinesisClient kinesis;
+    private String myStreamName = "sampleKinesis";
+
+
+    public AmazonKinesisRecordProducerSample() 
+    {
+        
+        AWSCredentials credentials = null;
+        try
+        {
+            credentials = new ProfileCredentialsProvider("rakesh").getCredentials();
+        } 
+        catch (Exception e)
+        {
+           System.out.println(e.getMessage());
+        }
+
+        kinesis = new AmazonKinesisClient(credentials);
+        Region mumbai = Region.getRegion(Regions.AP_SOUTH_1);
+        kinesis.setRegion(mumbai);
+
+        // Describe the stream and check if it exists.
+        DescribeStreamRequest describeStreamRequest = new DescribeStreamRequest().withStreamName(myStreamName);
+        StreamDescription streamDescription = kinesis.describeStream(describeStreamRequest).getStreamDescription();
+        System.out.printf("Stream %s has a status of %s.\n", myStreamName, streamDescription.getStreamStatus());
+
+       
+        
+        
+    }
+
+    public void PutMsgToKinesis(String msg) throws Exception
+    {
+
+        System.out.printf("Putting records in stream : %s \n", myStreamName);
+       
+            long createTime = System.currentTimeMillis();
+            PutRecordRequest putRecordRequest = new PutRecordRequest();
+            putRecordRequest.setStreamName(myStreamName);
+            
+            //putRecordRequest.setData(ByteBuffer.wrap(String.format("testData-%d", createTime).getBytes()));
+            
+            putRecordRequest.setData(ByteBuffer.wrap(msg.getBytes()));
+            
+            putRecordRequest.setPartitionKey(String.format("partitionKey-%d", createTime));
+            PutRecordResult putRecordResult = kinesis.putRecord(putRecordRequest);
+            System.out.printf("Successfully put record, partition key : %s, ShardID : %s, SequenceNumber : %s.\n",
+                    putRecordRequest.getPartitionKey(),
+                    putRecordResult.getShardId(),
+                    putRecordResult.getSequenceNumber());
+        
+    }
+
+   
+}

@@ -1,0 +1,12 @@
+package com.amazonaws.lambda.demo;
+
+public class Tweet
+{
+	private String ID;
+	private String name;
+	private String screenName;
+	private String email;
+	
+	
+
+}

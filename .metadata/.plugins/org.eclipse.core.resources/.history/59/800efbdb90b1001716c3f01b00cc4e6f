@@ -1,0 +1,8 @@
+package com.amazonaws.lambda.demo;
+
+public class Tweet_msg 
+{
+	private String id;
+	
+
+}

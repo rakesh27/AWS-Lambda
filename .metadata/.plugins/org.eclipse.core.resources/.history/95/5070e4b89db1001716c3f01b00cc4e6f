@@ -1,0 +1,65 @@
+package kinesis;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.events.KinesisEvent;
+import com.amazonaws.services.lambda.runtime.events.KinesisEvent.KinesisEventRecord;
+import com.amazonaws.services.s3.model.RequestPaymentConfiguration.Payer;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class Handler implements RequestHandler<KinesisEvent, Integer> 
+{
+	
+    public Integer handleRequest(KinesisEvent event, Context context)
+    {
+    	context.getLogger().log("Input: " + event);
+    	AmazonDynamoDBSample ads  = new AmazonDynamoDBSample();
+    	context.getLogger().log("Table Description : "+ads.DrescribeTable("messages"));
+    	Gson gson = new Gson();
+    	
+    	JsonParser jsonparser = new JsonParser();
+    	
+    	
+    	
+        for (KinesisEventRecord record : event.getRecords())
+        {
+            String payload = new String(record.getKinesis().getData().array());
+            context.getLogger().log("Payload: " + payload);
+            
+            JsonObject jsonObj = (JsonObject) jsonparser.parse(payload);
+            
+            Tweet_msg msg = new Tweet_msg();
+           msg.setId(jsonObj.get("msg_id").getAsString());
+           msg.setMsg(jsonObj.get("msg").getAsString());
+       
+           msg.setCreated_at(jsonObj.get("Created_at").getAsString());
+           msg.setRetweet(jsonObj.get("isRetweet").getAsBoolean());
+           msg.setRetweeted(jsonObj.get("isRetweeted").getAsBoolean());
+           
+           
+           
+           
+           Tweet_user user = new Tweet_user();
+           JsonObject userobj = jsonObj.get("Username").getAsJsonObject();
+           user.setId(userobj.get("id").getAsString());
+           user.setName(userobj.get("name").getAsString());
+           user.setScreenName(userobj.get("screenName").getAsString());
+           user.setEmail(userobj.get("email").getAsString());          
+           user.setLocation(userobj.get("location").getAsString());
+           user.setFavouritesCount(userobj.get("favouritesCount").getAsInt());
+           user.setFollowersCount(userobj.get("followersCount").getAsInt());
+           user.setFriendsCount(userobj.get("friendsCount").getAsInt());
+           user.setVerified(userobj.get("isVerified").getAsBoolean());
+           user.setStatusesCount(userobj.get("statusesCount").getAsInt());
+           
+           
+           msg.setUser(user);
+           
+           ads.saveOrUpdateEvent(msg);
+        }
+        return event.getRecords().size();
+    }
+}

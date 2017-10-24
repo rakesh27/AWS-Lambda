@@ -1,0 +1,22 @@
+package com.amazonaws.samples;
+
+import com.amazonaws.services.lambda.runtime.Context;
+
+
+
+
+public class DB_Trigger
+{
+	
+	    public void handleRequest(Object input, Context context)
+	    {
+	        context.getLogger().log("DynomoDB Started ");
+	       
+			AmazonDynamoDBSample ads  = new AmazonDynamoDBSample();
+			context.getLogger().log(ads.DrescribeTable(tableName));        
+	        
+	        context.getLogger().log("DynomoDB ended");
+	    }
+	
+
+}

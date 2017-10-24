@@ -1,0 +1,17 @@
+package com.amazonaws.lambda.demo;
+
+import java.util.Date;
+
+public class Tweet_msg 
+{
+	private String id;
+	private String msg;
+	private String user_id;
+	private Date Created_at;
+	private boolean isRetweet;
+	private boolean isRetweeted;
+	
+	
+	
+
+}

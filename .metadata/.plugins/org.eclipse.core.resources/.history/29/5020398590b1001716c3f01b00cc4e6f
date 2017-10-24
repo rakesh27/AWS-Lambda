@@ -1,0 +1,24 @@
+package com.amazonaws.lambda.demo;
+
+import java.util.Date;
+
+public class Tweet_user
+{
+	private String id;
+	private String name;
+	private String screenName;
+	private String email;
+	private String Location;
+	private String description;
+	private String url;
+	private int followersCount;
+	private String status;
+	private int friendsCount;
+	private Date createdAt;
+	private int favouritesCount;
+	private String timeZone;
+	private boolean isVerified;
+	
+	
+
+}

@@ -1,0 +1,84 @@
+package com.amazonaws.lambda.sqs_poller;
+
+import java.util.List;
+import java.util.Properties;
+
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClient;
+import com.amazonaws.services.sqs.model.GetQueueUrlRequest;
+import com.amazonaws.services.sqs.model.ListQueuesResult;
+import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
+import com.amazonaws.services.sqs.model.SendMessageRequest;
+import com.amazonaws.services.sqs.model.SendMessageResult;
+
+public class AWS_SQS
+{
+	
+	   private AmazonSQS sqs;
+	   
+
+	  
+	    public  AWS_SQS( )
+	    {
+	    		
+	         
+	          
+	            this.sqs = new AmazonSQSClient(this.credentials);
+	         
+	                 
+	           
+
+	       
+	    }
+
+	    
+	 
+
+	    /**
+	     * returns the queueurl for for sqs queue if you pass in a name
+	     * @param queueName
+	     * @return
+	     */
+	    public String getQueueUrl(String queueName)
+	    {
+	        GetQueueUrlRequest getQueueUrlRequest = new GetQueueUrlRequest(queueName);
+	        return this.sqs.getQueueUrl(getQueueUrlRequest).getQueueUrl();
+	    }
+
+	    /**
+	     * lists all your queue.
+	     * @return
+	     */
+	    public ListQueuesResult listQueues()
+	    {
+	       return this.sqs.listQueues();
+	    }
+
+	    /**
+	     * send a single message to your sqs queue
+	     * @param queueUrl
+	     * @param message
+	     */
+	    public String sendMessageToQueue(String queueUrl, String message)
+	    {
+	        SendMessageResult messageResult =  this.sqs.sendMessage(new SendMessageRequest(queueUrl, message));
+	       return messageResult.toString();
+	    }
+
+	    /**
+	     * gets messages from your queue
+	     * @param queueUrl
+	     * @return
+	     */
+	    public List<Message> getMessagesFromQueue(String queueUrl)
+	    {
+	       ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(queueUrl);
+	       List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
+	       return messages;
+	    }
+
+	 
+
+}

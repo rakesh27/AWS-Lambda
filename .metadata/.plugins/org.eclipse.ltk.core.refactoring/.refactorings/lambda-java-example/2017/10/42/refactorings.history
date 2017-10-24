@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;DynomoDB_AWS/src/main/java/com.amazonaws.samples&apos;&#x0D;&#x0A;- Original project: &apos;lambda-java-example&apos;&#x0D;&#x0A;- Destination element: &apos;DynomoDB_AWS/src/main/java/com.amazonaws.samples&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     kinesis.Tweet_msg.java&#x0D;&#x0A;     kinesis.Tweet_user.java" description="Copy compilation units" destination="=DynomoDB_AWS/src\/main\/java&lt;com.amazonaws.samples" element1="/src\/main\/java&lt;kinesis{Tweet_msg.java" element2="/src\/main\/java&lt;kinesis{Tweet_user.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1508073812379" units="2" version="1.0"/>
+</session>

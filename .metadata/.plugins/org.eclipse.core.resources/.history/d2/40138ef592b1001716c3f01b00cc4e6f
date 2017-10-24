@@ -1,0 +1,41 @@
+package com.amazonaws.lambda.demo;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.events.KinesisEvent;
+import com.amazonaws.services.lambda.runtime.events.KinesisEvent.KinesisEventRecord;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+public class LambdaFunctionHandler implements RequestHandler<KinesisEvent, Integer> 
+{
+
+    @Override
+    public Integer handleRequest(KinesisEvent event, Context context)
+    {
+        context.getLogger().log("Input: " + event);
+    	AmazonDynamoDBSample ads  = new AmazonDynamoDBSample();
+    	context.getLogger().log("Table Description : "+ads.DrescribeTable("SampleTable"));
+    	Gson gson = new Gson();
+    	
+        for (KinesisEventRecord record : event.getRecords())
+        {
+            String payload = new String(record.getKinesis().getData().array());
+            context.getLogger().log("Payload: " + payload);
+            JsonElement element = gson.fromJson (payload, JsonElement.class);
+            JsonObject jsonObj = element.getAsJsonObject();
+            
+            Tweet_msg msg = new Tweet_msg();
+           msg.setId(jsonObj.get("msg_id").getAsString());
+           msg.setMsg(jsonObj.get("msg").getAsString());
+           msg.setUser_id(jsonObj.get("Username").getAsJsonObject().get("id").getAsString());
+           msg.setCreated_at(jsonObj.get("Created_at").getAsString());
+           msg.setRetweet(jsonObj.get("isRetweet").getAsBoolean());
+           msg.setCreated_at(jsonObj.get("isRetweet").getAsBoolean());
+            
+        }
+
+        return event.getRecords().size();
+    }
+}

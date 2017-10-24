@@ -1,0 +1,35 @@
+package sqs_poller;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.sqs.model.Message;
+
+public class Poller
+{
+
+    public void handleRequest(Object input, Context context)
+    {
+        context.getLogger().log("Cron Started input is  : ");
+       
+		Properties properties  = new Properties();
+			
+		properties.setProperty("accessKey", "AKIAJD7MY3CKS5Y2YWNQ");
+		properties.setProperty("secretKey", "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");
+		properties.setProperty("endPoint", "https://sqs.ap-south-1.amazonaws.com");
+		
+        AWS_SQS sqs = new AWS_SQS(properties);
+        String url = sqs.getQueueUrl("Twitter_Queue");
+        
+        for(Message m : sqs.getMessagesFromQueue(url))
+        {
+        	
+        	context.getLogger().log("From SQS: "+sqs.deleteMessageFromQueue(url, m) );
+        }    
+        
+        context.getLogger().log("Cron ended");
+    }
+}

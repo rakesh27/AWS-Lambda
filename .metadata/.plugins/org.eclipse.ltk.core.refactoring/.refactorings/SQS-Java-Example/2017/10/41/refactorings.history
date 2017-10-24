@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 3 elements from project &apos;SQS-Java-Example&apos;&#x0D;&#x0A;- Original project: &apos;SQS-Java-Example&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     original-SQS-Java-Example-0.0.1-SNAPSHOT.jar&#x0D;&#x0A;     SQS-Java-Example-0.0.1-SNAPSHOT-shaded.jar&#x0D;&#x0A;     SQS-Java-Example-0.0.1-SNAPSHOT.jar" description="Delete elements" element1="target/original-SQS-Java-Example-0.0.1-SNAPSHOT.jar" element2="target/SQS-Java-Example-0.0.1-SNAPSHOT.jar" element3="target/SQS-Java-Example-0.0.1-SNAPSHOT-shaded.jar" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="3" stamp="1507895549305" subPackages="false" version="1.0"/>
+</session>

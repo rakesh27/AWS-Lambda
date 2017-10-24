@@ -1,0 +1,17 @@
+package com.amazonaws.lambda.sqs_poller;
+
+import com.amazonaws.services.lambda.runtime.Context;
+
+public class LambdaFunctionHandler
+{
+
+    public void handleRequest(String input, Context context)
+    {
+        context.getLogger().log("Cron Received input : " + input);
+        
+        
+    
+        context.getLogger().log("From SQS: " );
+       
+    }
+}

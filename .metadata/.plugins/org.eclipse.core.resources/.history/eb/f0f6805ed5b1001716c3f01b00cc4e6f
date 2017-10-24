@@ -1,0 +1,8 @@
+package api;
+
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+
+public class Handler implements RequestHandler<I, O>
+{
+
+}

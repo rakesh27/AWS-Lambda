@@ -1,0 +1,24 @@
+package com.amazonaws.lambda.sqs_poller;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.sqs.model.Message;
+
+public class LambdaFunctionHandler
+{
+
+    public void handleRequest(String input, Context context)
+    {
+        context.getLogger().log("Cron Started input is  : " + input);
+        
+        AWS_SQS sqs = new AWS_SQS();
+        String url = sqs.getQueueUrl("Twitter_Queue");
+        
+        for(Message m : sqs.getMessagesFromQueue())
+        {
+        	context.getLogger().log("From SQS: "+sqs.deleteMessageFromQueue(queueUrl, message) );
+        }
+    
+        
+       
+    }
+}
